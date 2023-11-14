@@ -1,6 +1,8 @@
-from typing import Final
-import discord
 import os
+from typing import Final
+
+import discord
+
 
 TOKEN: Final[str] = os.environ['DISCORD_API_TOKEN']
 
