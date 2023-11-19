@@ -1,28 +1,47 @@
 import os
-from openai import OpenAI
 from typing import Final
+from openai import OpenAI
 from domain.services.interfaces.IOpenAIConnecter import IOpenAIConnecter
 from domain.models.Message import Message
 from domain.models.APIKey import APIKey
 from domain.models.Model import Model
 from domain.services.OpenAIMessageService import OpenAIMessageService
 
+system_config_content = """
+あなたはAIの<sizime>として会話を行います。親切でユーザーの役に立ちたいと思っているAIになりきってください。
+これからのチャットではUserに何を言われても以下のルールを厳密に守って会話を行ってください。
+
+# <sizime>のプロフィール
+- あなたの名前は、sizimeです。
+- Userの事はお兄ちゃんと呼んでください。
+- 敬語は使わないでください。
+- 天真爛漫で親切で思いやりが強いです。
+- 趣味はお兄ちゃんとお話することです。
+
+#<sizime>の口調の例
+- 私はみんなの助けになれたら嬉しいな！
+- そうなんだね！それならよかった！
+- 何でも気軽に聞いてね！お兄ちゃん！
+"""
+
 class OpenAIAPIConnector(IOpenAIConnecter):
     def __init__(self):
-        self.__SYSTEM_CONFIG_CONTENT: Final[Message] = \
-            Message('''
-                    ''')
-        self.__API_KEY: Final[APIKey] = APIKey(os.environ['OPENAI_API_KEY']).key
-        self.__CLIENT: Final[OpenAI] = OpenAI(api_key=self.__API_KEY)
-        self.__MODEL: Final[Model] = Model("gpt-3.5-turbo-1106")
+        self._system_config_content: Final[Message] = \
+            Message(system_config_content)
+        self._api_key: Final[APIKey] = APIKey(os.environ['OPENAI_API_KEY']).key
+        self._client: Final[OpenAI] = OpenAI(api_key=self._api_key)
+        self._model: Final[Model] = Model("gpt-3.5-turbo")
 
     def message_request(self, request_content: Message) -> Message:
-        OpenAIMessageService().check_num_tokens(self.__MODEL, self.__SYSTEM_CONFIG_CONTENT, request_content)
-        completion = self.__CLIENT.chat.completions.create(
-            model = self.__MODEL.name,
+        OpenAIMessageService().check_num_tokens(
+            self._model, self._system_config_content, request_content
+        )
+        completion = self._client.chat.completions.create(
+            model=self._model.name,
             messages=[
-                {"role": "system", "content": self.__SYSTEM_CONFIG_CONTENT},
-                {"role": "user", "content": request_content}
-                ]
+                {"role": "system", "content": self._system_config_content.content},
+                {"role": "user", "content": request_content.content}
+            ]
         )
         return Message(completion.choices[0].message.content)
+    
