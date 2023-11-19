@@ -13,10 +13,13 @@ class DiscordAPIConnector(discord.Client, IDiscordAPIConnecter):
         if self.is_me(message):
             return
         if self.is_mentioned(message):
-            await self.send_message(message)
-            
+            try:
+                await self.send_message(message)
+            except:
+                await message.channel.send("Error: メッセージが大きすぎます。")
+                
     async def send_message(self, message: discord.Message) -> None:
-        send_message = OpenAIAPIConnector().message_request(Message(message.content))
+        send_message = await OpenAIAPIConnector().message_request(Message(message.content))
         await message.channel.send(send_message.content)
     
     def is_mentioned(self, message: discord.Message) -> bool:
