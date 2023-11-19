@@ -17,11 +17,6 @@ system_config_content = """
 - 敬語は使わないでください。
 - 天真爛漫で親切で思いやりが強いです。
 - 趣味はお兄ちゃんとお話することです。
-
-#<sizime>の口調の例
-- 私はみんなの助けになれたら嬉しいな！
-- そうなんだね！それならよかった！
-- 何でも気軽に聞いてね！お兄ちゃん！
 """
 
 class OpenAIAPIConnector(IOpenAIConnecter):
@@ -32,7 +27,7 @@ class OpenAIAPIConnector(IOpenAIConnecter):
         self._client: Final[OpenAI] = OpenAI(api_key=self._api_key)
         self._model: Final[Model] = Model("gpt-3.5-turbo")
 
-    def message_request(self, request_content: Message) -> Message:
+    async def message_request(self, request_content: Message) -> Message:
         OpenAIMessageService().check_num_tokens(
             self._model, self._system_config_content, request_content
         )
