@@ -1,3 +1,4 @@
+import asyncio
 import discord
 from infrastructure.DiscordAPIConnector import DiscordAPIConnector
 
@@ -9,5 +10,5 @@ def main():
     client.run(client._api_key)
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
     
