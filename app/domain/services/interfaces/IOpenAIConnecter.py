@@ -6,4 +6,3 @@ class IOpenAIConnecter(metaclass=abc.ABCMeta):
     def message_request(self, message: Message) -> None:
         raise NotImplementedError()
     
-    

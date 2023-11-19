@@ -7,3 +7,4 @@ class APIKey:
     @property
     def key(self) -> str:
         return self.__key
+    

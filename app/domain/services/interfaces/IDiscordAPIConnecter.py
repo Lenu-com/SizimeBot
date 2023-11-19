@@ -1,19 +1,20 @@
 import abc
-from domain.models.Message import Message
+import discord
 
-class IOpenAIConnecter(metaclass=abc.ABCMeta):
+class IDiscordAPIConnecter(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    async def on_message(self, message: Message) -> Message:
+    async def on_message(self, message: discord.Message) -> discord.Message:
         raise NotImplementedError()
     
     @abc.abstractmethod
-    def send_message(self, message: Message) -> None:
+    def send_message(self, message: discord.Message) -> None:
         raise NotImplementedError()
     
     @abc.abstractmethod
-    def is_mentioned(self, message: Message) -> bool:
+    def is_mentioned(self, message: discord.Message) -> bool:
         raise NotImplementedError()
     
     @abc.abstractmethod
-    def is_me(self, message: Message) -> bool:
+    def is_me(self, message: discord.Message) -> bool:
         raise NotImplementedError()
+    
