@@ -2,6 +2,7 @@ from typing import Dict, Final
 import tiktoken
 from domain.models.Model import Model
 from domain.models.Message import Message
+from domain.exceptions.exceptions import PromptException
 
 class OpenAIMessageService:
     __TOKENS_DICT: Final[Dict[str, int]] = {
@@ -24,6 +25,6 @@ class OpenAIMessageService:
     def check_num_tokens(cls, model: Model, config_content: Message, request_content: Message) -> bool:
         total_tokens = cls.__num_tokens_from_string(model, config_content, request_content)
         if not cls.__can_request(model, total_tokens):
-            raise ValueError('The number of tokens exceeds the limit.')
+            raise PromptException('The prompt is too large.')
         return True
     
