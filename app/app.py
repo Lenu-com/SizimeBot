@@ -1,14 +1,22 @@
-import asyncio
+from typing import Final
 import discord
-from infrastructure.DiscordAPIConnector import DiscordAPIConnector
+from OpenAIConnector import get_message
+TOKEN: Final[str] = 'Your Discord Bot Token'
 
-def main():
-    intents = discord.Intents.default()
-    intents.messages = True
-    intents.message_content = True
-    client = DiscordAPIConnector(intents=intents)
-    client.run(client._api_key)
+intents = discord.Intents.default()
+intents.message_content = True
+client = discord.Client(intents=intents)
 
-if __name__ == "__main__":
-    asyncio.run(main())
+@client.event
+async def on_ready():
+    print(f'{client.user} has connected to Discord!')
     
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+    
+    if client.user in message.mentions:
+        await message.channel.send(get_message(message.content.replace(f'<@!{client.user.id}>', '')))
+        
+client.run(TOKEN)
