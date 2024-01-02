@@ -1,7 +1,7 @@
 from typing import Final
 import discord
 from OpenAIConnector import get_message
-TOKEN: Final[str] = 'Your Discord Bot Token'
+TOKEN: Final[str] = 'YOUR_DISCORD_BOT_TOKEN'
 
 intents = discord.Intents.default()
 intents.message_content = True
