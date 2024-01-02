@@ -8,10 +8,10 @@ def load_config():
         config = yaml.safe_load(f)
     return config['config']
 
+API_KEY: Final[str] = 'Your OpenAI API Key'
+CONFIG: Final[str] = load_config()
+
 def get_message(send_prompt: str):
-    API_KEY: Final[str] = 'Your OpenAI API Key'
-    CONFIG: Final[str] = load_config()
-    
     client = OpenAI(
         api_key=API_KEY,
     )
