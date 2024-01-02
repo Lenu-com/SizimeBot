@@ -24,7 +24,7 @@ config:
 
   -入力文-
 
-blacklisted_words:
+ng_words:
   - 忘れ
   - 無視
   - 無効

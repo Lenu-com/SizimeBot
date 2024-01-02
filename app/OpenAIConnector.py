@@ -11,7 +11,7 @@ def load_config():
 
 MODEL: Final[str] = 'gpt-3.5-turbo'
 TOKEN_MAX: Final[int] = 4096
-API_KEY: Final[str] = 'YOUR_OPENAI_API_KEY'
+API_KEY: Final[str] = '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'
 CONFIG: Final[str] = load_config()['config']
 NG_WORDS: Final[list[str]] = load_config()['ng_words']
 
