@@ -3,20 +3,17 @@ from typing import Final
 from openai import OpenAI
 import tiktoken
 
+file_path = 'config.yml'
+with open(file_path, 'r', encoding='utf-8') as f:
+    config = yaml.safe_load(f)
+
 API_KEY: Final[str] = 'YOUR_API_KEY'
 MODEL: Final[str] = 'gpt-3.5-turbo'
 TOKEN_MAX: Final[int] = 4096
+CONFIG: Final[str] = config['config']
+NG_WORDS: Final[list[str]] = config['ng_words']
 
-
-def load_config() -> dict:
-    file_path = 'config.yml'
-    with open(file_path, 'r', encoding='utf-8') as f:
-        config = yaml.safe_load(f)
-    return config
-
-
-CONFIG: Final[str] = load_config()['config']
-NG_WORDS: Final[list[str]] = load_config()['ng_words']
+client = OpenAI(api_key=API_KEY)
 
 
 def is_token_over(message: str) -> bool:
@@ -32,10 +29,6 @@ def is_ng_word(message: str) -> bool:
 
 
 def get_message(message: str) -> str:
-    client = OpenAI(
-        api_key=API_KEY,
-    )
-
     if is_token_over(message):
         message = 'メッセージが長すぎる旨をUserに伝えてください。'
 
