@@ -1,18 +1,19 @@
 from typing import Final
 import discord
 from OpenAIConnector import get_message
-TOKEN: Final[str] = 'YOUR_DISCORD_BOT_TOKEN'
+
+TOKEN: Final[str] = 'YOUR_TOKEN'
 
 intents = discord.Intents.default()
 intents.message_content = True
 client = discord.Client(intents=intents)
 
 @client.event
-async def on_ready():
+async def on_ready() -> None:
     print(f'{client.user} has connected to Discord!')
     
 @client.event
-async def on_message(message):
+async def on_message(message) -> None:
     if message.author == client.user:
         return
     
