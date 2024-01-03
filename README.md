@@ -1,16 +1,17 @@
 
 # chatGPT×Discord 概要
-当プログラムはDiscordAPIとOpenAIAPIを使用し、
-Discord内でのBOTへのメッセージをプロンプトとして
-chatGPTへリクエストを送信することで、Discord内でのchatGPTの使用を実現します。
+当プログラムはDiscordAPIとOpenAIAPIを使用し、<br>
+Discord内でのBOTへのメッセージをプロンプトとして<br>
+chatGPTへリクエストを送信し、レスポンスをBOTが送信する事で<br>
+Discord内でのchatGPTの使用を可能にします。
 
 # 使用方法
-1. app.pyにDiscord Botのトークンを設定します。
+1. app.pyにDiscord Botのトークンを設定します。<br>
    ```
    TOKEN: Final[str] = 'YOUR_DISCORD_BOT_TOKEN'
    ```
 
-2. OpenAIConnector.pyにOpenAIのAPIキーを設定します。
+2. OpenAIConnector.pyにOpenAIのAPIキーを設定します。<br>
     ```
     API_KEY: Final[str] = 'YOUR_OPENAI_API_KEY'
     ```
@@ -26,5 +27,3 @@ chatGPTへリクエストを送信することで、Discord内でのchatGPTの�
 
 4. app.pyを実行し、本ツールを起動します。
 5. BOT宛にメンションを付け、メッセージを送信します。
-
-
